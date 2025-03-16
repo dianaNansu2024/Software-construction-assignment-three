@@ -24,12 +24,12 @@ class TestAuthAPI:
         response = self.client.post(url, data, format='json')
 
         assert response.status_code == 201
-        assert User.objects.filter(username='testuser').exists()
+        assert User.objects.filter(username='Nina').exists()
         assert 'token' in response.data  # Check if token is returned
 
     def test_user_login(self):
         # Create a user to login
-        User.objects.create_user(username='testuser', email='test@example.com', password='TestPass123')
+        User.objects.create_user(username='Nina', email='Nina@gmail.com', password='1234')
 
         url = reverse('login')
         data = {
@@ -42,12 +42,12 @@ class TestAuthAPI:
         assert 'token' in response.data  # Token should be returned
 
     def test_login_invalid_credentials(self):
-        User.objects.create_user(username='testuser', email='test@example.com', password='TestPass123')
+        User.objects.create_user(username='Nina', email='Nina@gmail.com', password='password')
 
         url = reverse('login')
         data = {
-            "username": "testuser",
-            "password": "WrongPass"
+            "username": "Nina",
+            "password": "Password"
         }
         response = self.client.post(url, data, format='json')
 
